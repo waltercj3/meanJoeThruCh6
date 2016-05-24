@@ -1,32 +1,65 @@
-// GET 'home' page
-module.exports.homelist = function(req, res){
+var request = require('request');
+var apiOptions = {
+  server : "http://localhost:3000"
+};
+if (process.env.NODE_ENV === 'production') {
+  apiOptions.server = "https://meanjoe.walterjohnson.pro";
+};
+
+var _formatDistance = function (distance) {
+  var numDistance, unit;
+  numDistance = parseFloat(distance) * 1.0936133
+  if (numDistance > 1000) {
+    numDistance = (numDistance * 0.000568182).toFixed(1);
+    unit = ' mi';
+  } else {
+    numDistance = Math.round(numDistance);
+    unit = ' yd';
+  }
+  return numDistance + unit;
+};
+
+var renderHomepage = function(req, res, responseBody){
   res.render('locations-list', {
-    title: 'Loc8r - wifi near you',
+    title: 'Loc8r - find a place to work with wifi',
     pageHeader: {
       title: 'Loc8r',
-      strapline: 'Find places to work near you that have wifi!'
+      strapline: 'Find places to work with wifi near you!'
     },
     sidebar: "Looking for wifi and a seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for.",
-      locations: [{
-      name: 'Starcups',
-      address: '125 High Street, Reading, RG6 1PS',
-      rating: 3,
-      facilities: ['Hot drinks', 'Food', 'Premium wifi'],
-      distance: '100m'
-    },{
-      name: 'Cafe Hero',
-      address: '125 High Street, Reading, RG6 1PS',
-      rating: 4,
-      facilities: ['Hot drinks', 'Food', 'Premium wifi'],
-      distance: '200m'
-    },{
-      name: 'Burger Queen',
-      address: '125 High Street, Reading, RG6 1PS',
-      rating: 2,
-      facilities: ['Food', 'Premium wifi'],
-      distance: '250m'
-    }]
+    locations: responseBody
   });
+};
+
+// GET 'home' page
+module.exports.homelist = function(req, res){
+  var requestOptions, path;
+  path = '/api/locations';
+  requestOptions = {
+    url : apiOptions.server + path,
+    method : "GET",
+    json : {},
+    qs : {
+      // lng : -123.28782914711235,
+      // lat : 44.54512094444831,
+      // lng : -123.263129,
+      // lat : 44.558420,
+      lng : -123.266124,
+      lat : 44.562743,
+      maxDistance : 5000
+    }
+  };
+  request(
+    requestOptions,
+    function(err, response, body) {
+      var i, data;
+      data = body;
+      for (i=0; i<data.length; i++) {
+        data[i].distance = _formatDistance(data[i].distance);
+      }
+      renderHomepage(req, res, body);
+    }
+  );
 };
 
 // GET 'Location info' page
