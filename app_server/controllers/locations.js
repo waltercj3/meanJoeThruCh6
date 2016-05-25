@@ -77,7 +77,7 @@ module.exports.homelist = function(req, res){
 };
 
 // GET 'Location info' page
-module.exports.locationInfo = function(req, res){
+var renderDetailPage = function(req, res){
   res.render('location-info', {
     title: 'Starcups',
     pageHeader: {title: 'Starcups'},
@@ -118,6 +118,21 @@ module.exports.locationInfo = function(req, res){
       }]
     }
   });
+};
+module.exports.locationInfo = function(req, res){
+  var requestOptions, path;
+  path = "/api/locations/" + req.params.locationid;
+  requestOptions = {
+    url : apiOptions.server + path,
+    method : "GET",
+    json : {}
+  };
+  request(
+    requestOptions,
+    function(err, response, body) {
+      renderDetailPage(req, res);
+    }
+  );
 };
 
 // GET 'Add review' page
