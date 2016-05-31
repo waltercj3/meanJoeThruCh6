@@ -5,14 +5,14 @@ var apiOptions = { //option determined by environment
 if (process.env.NODE_ENV === 'development') {
   apiOptions.server = "http://localhost:3000";
 } else if (process.env.NODE_ENV === 'production') {
-  apiOptions.server = "https://meanjoe.walterjohnson.pro";
-};
+  apiOptions.server = "http://meanjoe.walterjohnson.pro";
+}
 
 
 //takes distance in meters
 var _formatDistance = function (distance) {
   var numDistance, unit;
-  numDistance = parseFloat(distance) * 1.0936133
+  numDistance = parseFloat(distance) * 1.0936133;
   if (numDistance > 1000) {
     numDistance = (numDistance * 0.000568182).toFixed(1);
     unit = ' mi';

@@ -71,7 +71,7 @@ module.exports.locationsCreate = function(req, res) {
       sendJsonResponse(res, 201, location);
     }
   });
-};;
+};
 
 module.exports.locationsReadOne = function(req, res) {
   if (req.params && req.params.locationid) {
