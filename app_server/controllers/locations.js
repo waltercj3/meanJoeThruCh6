@@ -5,7 +5,7 @@ var apiOptions = { //option determined by environment
 if (process.env.NODE_ENV === 'development') {
   apiOptions.server = "http://localhost:3000";
 } else if (process.env.NODE_ENV === 'production') {
-  apiOptions.server = "http://meanjoe.walterjohnson.pro";
+  apiOptions.server = "http://meanjoe.azurewebsites.net";
 }
 
 
