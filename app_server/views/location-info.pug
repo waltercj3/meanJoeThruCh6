@@ -37,7 +37,8 @@ block content
             .panel-heading
               h2.panel-title Location map
             .panel-body
-              img.img-responsive.img-rounded(src='https://maps.googleapis.com/maps/api/staticmap?center=' + location.coords.lat + ',' + location.coords.lng + '&zoom=16&size=400x350&sensor=false&markers=' + location.coords.lat + ',' + location.coords.lng + '&scale=2')
+              img.img-responsive.img-rounded(src='https://maps.googleapis.com/maps/api/staticmap?center=' + location.coords.lat + ',' + location.coords.lng + '&zoom=16&size=400x350&sensor=false&markers=' + location.coords.lat + ',' + location.coords.lng + '&scale=2&key=AIzaSyAXA4BQISxskiMk7MGAGz5b_PC0C4UPVx0')
+              //the above API key has been restricted by the referring website
               //img.img-responsive.img-rounded(src="http://maps.googleapis.com/maps/api/staticmap?center=#{location.coords.lat},#{location.coords.lng}&zoom=17&size=400x350&sensor=false&markers=#{location.coords.lat},#{location.coords.lng}&scale=2")
       .row
         .col-xs-12
